@@ -17,20 +17,19 @@ using namespace std;
 
 int main()
 {
-	setlocale(LC_ALL, "ru"); // Поддержка русского языка
+	setlocale(LC_ALL, "ru");
 
-	const int ROW = 7; // Задаем количество строк
-	const int COL = 7; // Задаем количество колонок
+	const int ROW = 7;
+	const int COL = 7;
 
-	int arr[ROW][COL]; // Создаем массив
+	// Создание и заполнение массива
+	int arr[ROW][COL];
 
-	//Заполнение массива
-	for (int i = 0; i < ROW; i++) // цикл проходящий по строкам
+	for (int i = 0; i < ROW; i++)
 	{
-		for (int j = 0; j < COL; j++) // цикл проходящий по колонкам
+		for (int j = 0; j < COL; j++)
 		{
-			arr[i][j] = rand()%(8+1)+1; // Заполнение массива случайными числами
-			
+			arr[i][j] = rand() % (8 + 1) + 1;
 		}
 	}
 
@@ -44,7 +43,11 @@ int main()
 		for (int j = 0; j < COL; j++)
 		{
 			if (arr[i][j] > max && i + j == 7 - 1)
+			{
 				max = arr[i][j];
+				coloum_number_of_max = j;
+			}
+
 		}
 	}
 
@@ -66,23 +69,58 @@ int main()
 		j--;
 	}
 
-	// Вывод максимального элемента на побочной диагонали
-	cout << max << endl;
-
-	// Вывод минимального элемента на побочной диагонали
-	cout << min << endl;
-
-	cout << coloum_number_of_min << endl;
-
 	// Вывод исходного массива
-	for (int i = 0; i < ROW; i++) // цикл проходящий по строкам
+	cout << "\n\tИсходный массив:\n" << endl;
+
+	for (int i = 0; i < ROW; i++)
 	{
-		for (int j = 0; j < COL; j++) // цикл проходящий по колонкам
+		cout << "\t\t|";
+
+		for (int j = 0; j < COL; j++)
 		{
-			cout << arr[i][j] << " "; // вывод массива
+			cout << arr[i][j] << " ";
 		}
+
+		cout << "|";
+
 		cout << endl;
 	}
+
+	// Замена столбцов
+	int temp;
+
+	for (int i = 0; i < ROW; i++)
+	{
+		temp = arr[i][coloum_number_of_max];
+		arr[i][coloum_number_of_max] = arr[i][coloum_number_of_min];
+		arr[i][coloum_number_of_min] = temp;
+	}
+
+	// Вывод максимального элемента на побочной диагонали
+	cout << "\n\tМаксимальный элемент на побочной диагонали: " << max << endl;
+	cout << "\tЭлемент <" << max << "> находится на " << coloum_number_of_max + 1 << " стобце." << endl;
+
+	// Вывод минимального элемента на побочной диагонали
+	cout << "\n\tМинимальный элемент на побочной диагонали: " << min << endl;
+	cout << "\tЭлемент <" << min << "> находится на " << coloum_number_of_min + 1 << " стобце." << endl;
+
+	// Вывод результирующего массива
+	cout << "\n\tРезультирующий массив:\n" << endl;
+
+	for (int i = 0; i < ROW; i++)
+	{
+		cout << "\t\t|";
+
+		for (int j = 0; j < COL; j++)
+		{
+			cout << arr[i][j] << " ";
+		}
+
+		cout << "|";
+
+		cout << endl;
+	}
+
 	system("pause");
 	return 0;
 }
